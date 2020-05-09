@@ -1,8 +1,9 @@
 import React from 'react';
+import "./styles.css"
 
 function Login() {
   return (
-    <div className="bg-gray-100 px-5 overflow-y-hidden" style={{height: "100vh"}}>
+    <div className="background px-5 overflow-y-hidden" style={{height: "100vh"}}>
       <div className="container mx-auto flex justify-center py-10 w-full h-full">
         <div className="w-full max-w-xs">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
