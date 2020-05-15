@@ -1,0 +1,7 @@
+{
+  "name": "cacautime",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
