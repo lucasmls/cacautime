@@ -1,7 +1,7 @@
-.sales-table {
-  display: block;
-  overflow-x: auto;
-
+.results-table {
+  width: 100%;
+  margin-top: 10px;
+  
   white-space: nowrap;
   -ms-overflow-style: none;
 
@@ -10,27 +10,27 @@
   transition: box-shadow 0.15s ease 0s, transform 0.15s ease 0s, -webkit-box-shadow 0.15s ease 0s, -webkit-transform 0.15s ease 0s;
 }
 
-.sales-table::-webkit-scrollbar {
+.results-table::-webkit-scrollbar {
   display: none;
 }
 
-.sales-table thead tr {
+.results-table thead tr {
   background-color: var(--ion-color-light-tint);
 }
 
-.sales-table tbody {
+.results-table tbody {
   background-color: var(--ion-color-light);
 }
 
-/* .sales-table tbody tr:nth-child(odd) {
+/* .results-table tbody tr:nth-child(odd) {
   background-color: var(--ion-color-light);
 }
 
-.sales-table tbody tr:nth-child(even) {
+.results-table tbody tr:nth-child(even) {
   background-color: var(--ion-color-medium);
 } */
 
-.sales-table td, .sales-table th {
+.results-table td, .results-table th {
   padding: 2px 10px !important;
   text-align: left;
   color: var(--ion-text-color); 

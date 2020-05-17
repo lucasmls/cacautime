@@ -1,8 +1,8 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText } from '@ionic/react';
 
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import SalesTable from '../../components/SalesTable'
+import ResultTable from '../../components/ResultsTable'
 
 import './styles.css';
 
@@ -14,25 +14,72 @@ const Duties: React.FC = () => {
           <IonTitle>Plantões</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <Table>
-          <Thead className="my-head">
-            <Tr>
-              <Th>Cliente</Th>
-              <Th>Doce</Th>
-              <Th>Status</Th>
-              <Th>Meio de Pagamento</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td>Lucas Mendes</Td>
-              <Td>Palha Italiana</Td>
-              <Td>Pago</Td>
-              <Td>Transferência</Td>
-            </Tr>
-          </Tbody>
-        </Table>
+
+      <IonContent className="ion-padding-horizontal">
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <div className="duty">
+          <IonText color="dark">
+            <h4>Plantão 20/04/200 - 15 Doces</h4>
+          </IonText>
+
+          <SalesTable />
+          <ResultTable />
+        </div>
+
+        <br/>
       </IonContent>
     </IonPage>
   );
