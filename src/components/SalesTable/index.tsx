@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles.css'
+import { IonBadge } from '@ionic/react';
 
 const SalesTable: React.FC = () => {
   return (
@@ -16,25 +17,33 @@ const SalesTable: React.FC = () => {
         <tr>
           <td>Lucas Mendes</td>
           <td>Palha Italiana</td>
-          <td>Pago</td>
+          <td>
+            <IonBadge color="success">Pago</IonBadge>
+          </td>
           <td>Transferência</td>
         </tr>
         <tr>
           <td>Laisla Pinto Coelho</td>
           <td>Bolo no Pote - Brigadeiro</td>
-          <td>Não pago</td>
+          <td>
+            <IonBadge color="warning">Não pago</IonBadge>
+          </td>
           <td>Agendado</td>
         </tr>
         <tr>
           <td>Lucas Mendes</td>
           <td>Palha Italiana</td>
-          <td>Pago</td>
+          <td>
+            <IonBadge color="success">Pago</IonBadge>
+          </td>
           <td>Transferência</td>
         </tr>
         <tr>
           <td>Laisla Pinto Coelho</td>
           <td>Bolo no Pote - Brigadeiro</td>
-          <td>Não pago</td>
+          <td>
+            <IonBadge color="warning">Não pago</IonBadge>
+          </td>
           <td>Agendado</td>
         </tr>
       </tbody>
