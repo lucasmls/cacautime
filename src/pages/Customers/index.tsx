@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/react';
 import { addOutline } from 'ionicons/icons';
+
+import RegisterCustomerModal from '../../components/RegisterCustomerModal'
+
 import './styles.css';
 
 const Customers: React.FC = () => {
@@ -18,6 +21,8 @@ const Customers: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
+
+      <RegisterCustomerModal isOpen={showModal} handleClose={() => setShowModal(false)} />
 
       <IonContent className="ion-padding-horizontal">
       </IonContent>
