@@ -7,7 +7,7 @@ import CustomersLoader from './CustomersLoader'
 
 import './styles.css';
 
-const Candies: React.FC = () => {
+const Customers: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
@@ -177,6 +177,6 @@ const Candies: React.FC = () => {
   );
 };
 
-export default Candies;
+export default Customers;
 
 
