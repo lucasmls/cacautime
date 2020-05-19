@@ -1,0 +1,19 @@
+.register-candy-modal .ion-page {
+  justify-content: start;
+}
+
+.input-text-right {
+  text-align: right;
+}
+
+.register-candy-item {
+  --inner-padding-end: 0px;
+  --padding-start:0px
+}
+
+.register-candy-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

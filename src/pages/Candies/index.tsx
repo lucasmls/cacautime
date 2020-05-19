@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList, IonListHeader, IonSkeletonText, IonThumbnail } from '@ionic/react';
-// import { addOutline } from 'ionicons/icons';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
+import { addOutline } from 'ionicons/icons';
 
-// import RegisterCandyModal from '../../components/RegisterCandyModal'
+import RegisterCandyModal from '../../components/RegisterCandyModal'
 import CandiesLoader from './CandiesLoader'
 
 import './styles.css';
 
 const Candies: React.FC = () => {
-  // const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -20,15 +20,15 @@ const Candies: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Doces</IonTitle>
-          {/* <IonButtons slot="primary" onClick={() => setShowModal(true)}>
+          <IonButtons slot="primary" onClick={() => setShowModal(true)}>
             <IonButton>
               <IonIcon color="dark" slot="icon-only" icon={addOutline} />
             </IonButton>
-          </IonButtons> */}
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
-      {/* <RegisterCandyModal isOpen={showModal} handleClose={() => setShowModal(false)} /> */}
+      <RegisterCandyModal isOpen={showModal} handleClose={() => setShowModal(false)} />
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (
