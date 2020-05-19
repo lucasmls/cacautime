@@ -3,11 +3,11 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBu
 import { personAddOutline } from 'ionicons/icons';
 
 import RegisterCustomerModal from '../../components/RegisterCustomerModal'
-import LoadingCustomers from './LoadingCustomers'
+import CustomersLoader from './CustomersLoader'
 
 import './styles.css';
 
-const Customers: React.FC = () => {
+const Candies: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
@@ -32,7 +32,7 @@ const Customers: React.FC = () => {
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (
-          <LoadingCustomers />
+          <CustomersLoader />
         ) : (
           <IonList>
             <IonItem className="customer-item">
@@ -177,6 +177,6 @@ const Customers: React.FC = () => {
   );
 };
 
-export default Customers;
+export default Candies;
 
 
