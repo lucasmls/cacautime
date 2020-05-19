@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList, IonListHeader, IonSkeletonText, IonThumbnail } from '@ionic/react';
-import { addOutline } from 'ionicons/icons';
+import { personAddOutline } from 'ionicons/icons';
 
 import RegisterCustomerModal from '../../components/RegisterCustomerModal'
 import LoadingCustomers from './LoadingCustomers'
@@ -22,7 +22,7 @@ const Customers: React.FC = () => {
           <IonTitle>Clientes</IonTitle>
           <IonButtons slot="primary" onClick={() => setShowModal(true)}>
             <IonButton>
-              <IonIcon color="dark" slot="icon-only" icon={addOutline} />
+              <IonIcon color="dark" slot="icon-only" icon={personAddOutline} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
