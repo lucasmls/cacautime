@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonDatetime } from '@ionic/react';
+import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel } from '@ionic/react';
 
 import './styles.css';
 

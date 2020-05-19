@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList, IonListHeader, IonSkeletonText, IonThumbnail } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
 import { personAddOutline } from 'ionicons/icons';
 
 import RegisterCustomerModal from '../../components/RegisterCustomerModal'
