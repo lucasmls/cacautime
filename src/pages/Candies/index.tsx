@@ -20,6 +20,7 @@ import CandiesLoader from './CandiesLoader'
 import RegisterCandyModal from '../../components/RegisterCandyModal'
 import { candiesList } from '../../store/candies'
 import { api } from '../../services/api'
+import { toBRL } from '../../utils/toBRL'
 
 import './styles.css';
 
@@ -42,8 +43,6 @@ const Candies: React.FC = () => {
       setIsLoading(false)
     })()
   }, [setCandies])
-
-  const toBRL = (value: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
 
   return (
     <IonPage>
