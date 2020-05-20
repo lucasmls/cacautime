@@ -24,6 +24,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-super-responsive-table": "^5.1.1",
+    "recoil": "^0.0.7",
     "typescript": "3.8.3"
   },
   "scripts": {

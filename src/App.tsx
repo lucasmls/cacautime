@@ -1,4 +1,5 @@
 import React from 'react';
+import { RecoilRoot } from 'recoil'
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -39,29 +40,31 @@ import Candies from './pages/Candies'
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/duties" component={Duties} exact={true} />
-          <Route path="/customers" component={Customers} exact={true} />
-          <Route path="/candies" component={Candies} exact={true} />
-          <Route path="/" render={() => <Redirect to="/duties" />} exact={true} />
-        </IonRouterOutlet>
+      <RecoilRoot>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/duties" component={Duties} exact={true} />
+            <Route path="/customers" component={Customers} exact={true} />
+            <Route path="/candies" component={Candies} exact={true} />
+            <Route path="/" render={() => <Redirect to="/duties" />} exact={true} />
+          </IonRouterOutlet>
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="customers" href="/customers">
-            <IonIcon icon={personOutline} />
-            <IonLabel>Clientes</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="duties" href="/duties">
-            <IonIcon icon={calendarOutline} />
-            <IonLabel>Plantões</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="candies" href="/candies">
-            <IonIcon src='https://image.flaticon.com/icons/svg/2913/2913787.svg' />
-            <IonLabel>Doces</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="customers" href="/customers">
+              <IonIcon icon={personOutline} />
+              <IonLabel>Clientes</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="duties" href="/duties">
+              <IonIcon icon={calendarOutline} />
+              <IonLabel>Plantões</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="candies" href="/candies">
+              <IonIcon src='https://image.flaticon.com/icons/svg/2913/2913787.svg' />
+              <IonLabel>Doces</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </RecoilRoot>
     </IonReactRouter>
   </IonApp>
 );
