@@ -1,19 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
+import { useRecoilState } from 'recoil'
 import { addOutline } from 'ionicons/icons';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonAvatar,
+  IonLabel,
+  IonList
+} from '@ionic/react';
 
-import RegisterCandyModal from '../../components/RegisterCandyModal'
 import CandiesLoader from './CandiesLoader'
+import RegisterCandyModal from '../../components/RegisterCandyModal'
+import { candiesList } from '../../store/candies'
+import { api } from '../../services/api'
 
 import './styles.css';
 
+interface Candy {
+  id: number,
+  name: string,
+  price: number,
+}
+
 const Candies: React.FC = () => {
+  const [candies, setCandies] = useRecoilState(candiesList) as [Candy[], (c: Candy[]) => null]
+
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1500)
-  }, [])
+    (async () => {
+      const { data } = await api.get<Candy[]>("/candy")
+      setCandies([...data])
+      setIsLoading(false)
+    })()
+  }, [setCandies])
+
+  const toBRL = (value: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
 
   return (
     <IonPage>
@@ -35,60 +65,17 @@ const Candies: React.FC = () => {
           <CandiesLoader />
         ) : (
           <IonList>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Palha Italiana  - <b>Ninho</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Palha Italiana  - <b>Doce de Leite</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Palha Italiana  - <b>Brigadeiro</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Bolo no Pote  - <b>Ninho</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Bolo no Pote  - <b>Morango</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="candy-item">
-              <IonAvatar slot="start">
-                <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Bolo no Pote  - <b>Brigadeiro</b></h3>
-                <p>$5,00</p>
-              </IonLabel>
-            </IonItem>
+            {candies.map(candy => (
+              <IonItem className="candy-item" key={String(candy.id)}>
+                <IonAvatar slot="start">
+                  <img alt="Candy" src="https://image.flaticon.com/icons/svg/2913/2913712.svg" />
+                </IonAvatar>
+                <IonLabel>
+                  <h3>{candy.name}</h3>
+                  <p>{toBRL(candy.price)}</p>
+                </IonLabel>
+              </IonItem>
+            ))}
           </IonList>
         )}
       </IonContent>
