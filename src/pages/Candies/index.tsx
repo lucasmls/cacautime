@@ -23,12 +23,7 @@ import { api } from '../../services/api'
 import { toBRL } from '../../utils/money'
 
 import './styles.css';
-
-interface Candy {
-  id: number,
-  name: string,
-  price: number,
-}
+import Candy from '../../interfaces/Candy';
 
 const Candies: React.FC = () => {
   const [candies, setCandies] = useRecoilState(candiesList) as [Candy[], (c: Candy[]) => null]

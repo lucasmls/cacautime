@@ -6,6 +6,7 @@ const registerDutyValidation =  Yup.object().shape({
 
   price: Yup.string()
     .required('O campo de preço é obrigatório')
+    .min(4, "Por favor, insira todas as casas decimais")
 })
 
 export {

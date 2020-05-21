@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
 import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
-import './styles.css';
 import { registerDutyValidation } from '../../validators'
 import { sanitizePrice } from '../../utils/money';
 import { api } from '../../services/api';
+import { candiesList } from '../../store/candies'
+import Candy from '../../interfaces/Candy';
 
+import './styles.css';
 interface Props {
   isOpen: boolean
   handleClose(): void
@@ -19,6 +22,8 @@ interface FormData {
 }
 
 const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
+  const [candies, setCandies] = useRecoilState(candiesList) as [Candy[], (c: Candy[]) => null]
+
   const {
     setFieldValue,
     handleSubmit:
@@ -44,11 +49,11 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
     }
 
     try {
-      await api.post("/candy", payload)    
+      const { data: candy } = await api.post<Candy>("/candy", payload)
       resetForm()
       setShowSuccessToast(true)
+      setCandies([...candies, candy])
     } catch (error) {
-      console.log("Deu ruim p cadastrar o doce...")
       console.error(error)
       setShowFailureToast(true)
     }
