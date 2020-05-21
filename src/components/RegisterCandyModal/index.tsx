@@ -1,10 +1,12 @@
-import React from 'react';
-import { Formik, useFormik } from 'formik'
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonFooter } from '@ionic/react';
+import React, { useState } from 'react';
+import { useFormik } from 'formik'
+import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
 import './styles.css';
 import { registerDutyValidation } from '../../validators'
+import { sanitizePrice } from '../../utils/money';
+import { api } from '../../services/api';
 
 interface Props {
   isOpen: boolean
@@ -18,17 +20,43 @@ interface FormData {
 
 const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
   const {
-    setFieldValue, handleSubmit, values, errors,
+    setFieldValue,
+    handleSubmit:
+    submit,
+    values,
+    errors,
+    resetForm,
+    isSubmitting,
   } = useFormik({
     initialValues: { name: '', price: '' },
-    onSubmit: (data: FormData) => {console.log("submit", data)},
+    onSubmit: handleSubmit,
     validateOnChange: false,
     validationSchema: registerDutyValidation,
   })
 
-  const handleModalDismiss = () => {
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showFailureToast, setShowFailureToast] = useState(false);
+
+  async function handleSubmit (data: FormData) {
+    const payload = {
+      ...data,
+      price: sanitizePrice(data.price)
+    }
+
+    try {
+      await api.post("/candy", payload)    
+      resetForm()
+      setShowSuccessToast(true)
+    } catch (error) {
+      console.log("Deu ruim p cadastrar o doce...")
+      console.error(error)
+      setShowFailureToast(true)
+    }
+  }
+
+  function handleModalDismiss () {
     handleClose()
-    console.log("Modal closed!")
+    resetForm()
   }
 
   return (
@@ -45,6 +73,28 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
+
+      <IonLoading
+        isOpen={isSubmitting}
+        message={'Salvando o doce...'}
+        duration={5000}
+      />
+
+      <IonToast
+        isOpen={showSuccessToast}
+        onDidDismiss={() => setShowSuccessToast(false)}
+        message="Doce cadastrado com sucesso."
+        duration={4000}
+        color="success"
+      />
+
+      <IonToast
+        isOpen={showFailureToast}
+        onDidDismiss={() => setShowFailureToast(false)}
+        message="Erro ao cadastrar o doce, tente novamente mais tarde."
+        duration={4000}
+        color="danger"
+      />
 
       <div className="register-candy-container ion-padding-horizontal ion-padding-vertical">
         <div>
@@ -71,7 +121,9 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
           <span className={classnames({ 'validation-message': true, 'hide': !errors.price })}>{errors.price}</span>
         </div>
 
-        <IonButton className="register-candy-btn" expand="block" color="success" onClick={() => handleSubmit()}>Salvar</IonButton>
+        <IonButton className="register-candy-btn" expand="block" color="primary" onClick={() => submit()}>
+          Salvar
+        </IonButton>
       </div>  
     </IonModal>
   );
