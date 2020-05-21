@@ -9,6 +9,15 @@ const registerDutyValidation =  Yup.object().shape({
     .min(4, "Por favor, insira todas as casas decimais")
 })
 
+const registerCustomerValidation =  Yup.object().shape({
+  name: Yup.string()
+    .required('O campo de nome é obrigatório'),
+
+  phone: Yup.string()
+    .required('O campo de telefone é obrigatório')
+})
+
 export {
   registerDutyValidation,
+  registerCustomerValidation,
 }
