@@ -20,7 +20,7 @@ import CandiesLoader from './CandiesLoader'
 import RegisterCandyModal from '../../components/RegisterCandyModal'
 import { candiesList } from '../../store/candies'
 import { api } from '../../services/api'
-import { toBRL } from '../../utils/toBRL'
+import { toBRL } from '../../utils/money'
 
 import './styles.css';
 

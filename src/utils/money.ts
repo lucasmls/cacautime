@@ -4,3 +4,7 @@ export const toBRL = (value: number) => (
     { style: 'currency', currency: 'BRL' }
   ).format(value)
 )
+
+export const sanitizePrice = (price: string) => (
+  Number(price.replace('.', ''))
+)
