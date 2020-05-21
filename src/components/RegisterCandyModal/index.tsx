@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel } from '@ionic/react';
+import { Formik } from 'formik'
+import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonFooter } from '@ionic/react';
+import classnames from 'classnames'
 
 import './styles.css';
+import { registerDutyValidation } from '../../validators'
 
 interface Props {
   isOpen: boolean
   handleClose(): void
 }
 
-const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
-  const [name, setName] = useState<string>();
-  const [price, setPrice] = useState<string>();
+interface FormData {
+  name: string;
+  price: string;
+}
 
+const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
   const handleModalDismiss = () => {
     handleClose()
     console.log("Modal closed!")
@@ -33,21 +38,45 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
       </IonHeader>
 
       <div className="register-candy-container ion-padding-horizontal ion-padding-vertical">
-        <form>
-          <IonItem className="register-candy-item">
-            <IonLabel>Nome</IonLabel>
-            <IonInput className="input-text-right" type="text" value={name} placeholder="Palha Italiana" onIonChange={e => setName(e.detail.value!)} />
-          </IonItem>
+        <Formik
+          onSubmit={(data: FormData) => {console.log("submit", data)}}
+          initialValues={{ name: '', price: '' }}
+          validationSchema={registerDutyValidation}
+          validateOnChange={false}
+        >
+          {({ setFieldValue, handleSubmit, values, errors }) => (
+            <>
+              <div>
+                <IonItem className="register-candy-item">
+                  <IonLabel>Nome</IonLabel>
+                  <IonInput
+                    className="input-text-right"
+                    placeholder="Palha Italiana"
+                    type="text"
+                    value={values.name}
+                    onIonChange={e => setFieldValue('name', e.detail.value!)} />
+                </IonItem>
+                <span className={classnames({ 'validation-message': true, 'hide': !errors.name })}>{errors.name}</span>
 
-          <IonItem className="register-candy-item">
-            <IonLabel>Preço</IonLabel>
-            <IonInput className="candy-quantity" type="number" value={price} placeholder="15" onIonChange={e => setPrice(e.detail.value!)} />
-          </IonItem>
-        </form>
+                <IonItem className="register-candy-item"> 
+                  <IonLabel>Preço</IonLabel>
+                  <IonInput
+                    className="candy-quantity"
+                    placeholder="15"
+                    type="number"
+                    value={values.price}
+                    onIonChange={e => setFieldValue('price', e.detail.value!)} />
+                </IonItem>
+                <span className={classnames({ 'validation-message': true, 'hide': !errors.price })}>{errors.price}</span>
+              </div>
 
-        <IonButton className="register-candy-btn" expand="block" color="success">Salvar</IonButton>
+              <IonButton className="register-candy-btn" expand="block" color="success" onClick={() => handleSubmit()}>Salvar</IonButton>
+            </>
+          )}
+
+        </Formik>
+
       </div>  
-
     </IonModal>
   );
 }
