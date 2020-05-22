@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
 import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
 import { registerCustomerValidation } from '../../validators'
 import Customer from '../../interfaces/Customer';
+import { customersList } from '../../store/customers'
 import './styles.css';
 import { api } from '../../services/api';
 
@@ -19,6 +21,8 @@ interface FormData {
 }
 
 const RegisterCustomerModal = ({ isOpen = false, handleClose }: Props) => {
+  const [customers, setCustomers] = useRecoilState(customersList) as [Customer[], (c: Customer[]) => null]
+
   const {
     setFieldValue,
     handleSubmit: submit,
@@ -38,11 +42,10 @@ const RegisterCustomerModal = ({ isOpen = false, handleClose }: Props) => {
 
   async function handleSubmit(data: FormData) {
     try {
-      await api.post<Customer>("/customer", data)
+      const { data: customer } = await api.post<Customer>("/customer", data)
       resetForm()
       setShowSuccessToast(true)
-      // @TODO => Update the recoil customers list state when its ready.
-      // setCandies([...candies, candy])
+      setCustomers([...customers, customer])
     } catch (error) {
       console.error(error)
       setShowFailureToast(true)
