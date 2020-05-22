@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 import { IonModal, IonButton, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
-import { registerDutyValidation } from '../../validators'
+import { registerCandyValidation } from '../../validators'
 import { sanitizePrice } from '../../utils/money';
 import { api } from '../../services/api';
 import { candiesList } from '../../store/candies'
@@ -37,7 +37,7 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
     initialValues: { name: '', price: '' },
     onSubmit: handleSubmit,
     validateOnChange: false,
-    validationSchema: registerDutyValidation,
+    validationSchema: registerCandyValidation,
   })
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);

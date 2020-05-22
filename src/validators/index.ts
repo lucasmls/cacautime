@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-const registerDutyValidation =  Yup.object().shape({
+const registerCandyValidation =  Yup.object().shape({
   name: Yup.string()
     .required('O campo de nome é obrigatório'),
 
@@ -18,6 +18,6 @@ const registerCustomerValidation =  Yup.object().shape({
 })
 
 export {
-  registerDutyValidation,
+  registerCandyValidation,
   registerCustomerValidation,
 }
