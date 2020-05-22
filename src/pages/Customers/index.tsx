@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil'
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
 import { personAddOutline } from 'ionicons/icons';
 
@@ -6,14 +7,23 @@ import RegisterCustomerModal from '../../components/RegisterCustomerModal'
 import CustomersLoader from './CustomersLoader'
 
 import './styles.css';
+import { api } from '../../services/api';
+import Customer from '../../interfaces/Customer';
+import { customersList } from '../../store/customers'
 
 const Customers: React.FC = () => {
+  const [customers, setCustomers] = useRecoilState(customersList) as [Customer[], (c: Customer[]) => null]
+
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 3000)
-  }, [])
+    (async () => {
+      const { data } = await api.get<Customer[]>('/customer')
+      setCustomers([...data])
+      setIsLoading(false)
+    })()
+  }, [setCustomers])
 
   return (
     <IonPage>
@@ -35,141 +45,17 @@ const Customers: React.FC = () => {
           <CustomersLoader />
         ) : (
           <IonList>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Laisla Pinto Coelho</h3>
-                <p>(31) 91234-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Lucas Mendes</h3>
-                <p>(31) 98323-1234</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Luciene Fonseca</h3>
-                <p>(31) 92371-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Laisla Pinto Coelho</h3>
-                <p>(31) 91234-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Lucas Mendes</h3>
-                <p>(31) 98323-1234</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Luciene Fonseca</h3>
-                <p>(31) 92371-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Laisla Pinto Coelho</h3>
-                <p>(31) 91234-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Lucas Mendes</h3>
-                <p>(31) 98323-1234</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Luciene Fonseca</h3>
-                <p>(31) 92371-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Laisla Pinto Coelho</h3>
-                <p>(31) 91234-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Lucas Mendes</h3>
-                <p>(31) 98323-1234</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Luciene Fonseca</h3>
-                <p>(31) 92371-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Laisla Pinto Coelho</h3>
-                <p>(31) 91234-0750</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Lucas Mendes</h3>
-                <p>(31) 98323-1234</p>
-              </IonLabel>
-            </IonItem>
-            <IonItem className="customer-item">
-              <IonAvatar slot="start">
-                <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-              </IonAvatar>
-              <IonLabel>
-                <h3>Luciene Fonseca</h3>
-                <p>(31) 92371-0750</p>
-              </IonLabel>
-            </IonItem>
+            {customers.map(customer => (
+              <IonItem className="customer-item" key={String(customer.id)}>
+                <IonAvatar slot="start">
+                  <img alt="User" src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
+                </IonAvatar>
+                <IonLabel>
+                  <h3>{customer.name}</h3>
+                  <p>{customer.phone}</p>
+                </IonLabel>
+              </IonItem>
+            ))}
           </IonList>
         )}
       </IonContent>
