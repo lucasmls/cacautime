@@ -3,12 +3,7 @@ import { useRecoilState } from 'recoil'
 import { addOutline } from 'ionicons/icons';
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
   IonIcon,
   IonItem,
   IonAvatar,
@@ -18,6 +13,7 @@ import {
 
 import CandiesLoader from './CandiesLoader'
 import RegisterCandyModal from '../../components/RegisterCandyModal'
+import Header from '../../components/Header'
 import { candiesList } from '../../store/candies'
 import { api } from '../../services/api'
 import { toBRL } from '../../utils/money'
@@ -41,16 +37,16 @@ const Candies: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Doces</IonTitle>
-          <IonButtons slot="primary" onClick={() => setShowModal(true)}>
-            <IonButton>
-              <IonIcon color="dark" slot="icon-only" icon={addOutline} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title="Doces"
+        buttons={[{
+          handlerFunc: () => setShowModal(true),
+          slot: "primary",
+          text: (
+            <IonIcon color="dark" slot="icon-only" icon={addOutline} />
+          ),
+        }]}
+      />
 
       <RegisterCandyModal isOpen={showModal} handleClose={() => setShowModal(false)} />
 

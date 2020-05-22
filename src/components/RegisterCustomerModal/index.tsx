@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
+import { IonModal, IonButton, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
 import { registerCustomerValidation } from '../../validators'
@@ -9,6 +9,7 @@ import Customer from '../../interfaces/Customer';
 import { customersList } from '../../store/customers'
 import './styles.css';
 import { api } from '../../services/api';
+import Header from '../Header'
 
 interface Props {
   isOpen: boolean
@@ -59,18 +60,15 @@ const RegisterCustomerModal = ({ isOpen = false, handleClose }: Props) => {
 
   return (
     <IonModal cssClass="register-customer-modal" isOpen={isOpen} swipeToClose={true} onDidDismiss={handleModalDismiss}>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Cadastrar cliente</IonTitle>
-          <IonButtons slot="primary" onClick={handleModalDismiss}>
-            <IonButton>
-              <IonText>
-                Fechar
-              </IonText>
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title="Cadastrar cliente"
+        buttons={[{
+          handlerFunc: handleModalDismiss,
+          slot: "primary",
+          text: "Fechar",
+        }]}
+      />
+
 
       <IonLoading
         isOpen={isSubmitting}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
+import { IonContent, IonPage, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
 import { personAddOutline } from 'ionicons/icons';
 
 import RegisterCustomerModal from '../../components/RegisterCustomerModal'
+import Header from '../../components/Header';
 import CustomersLoader from './CustomersLoader'
 
 import './styles.css';
@@ -27,16 +28,16 @@ const Customers: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Clientes</IonTitle>
-          <IonButtons slot="primary" onClick={() => setShowModal(true)}>
-            <IonButton>
-              <IonIcon color="dark" slot="icon-only" icon={personAddOutline} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title="Clientes"
+        buttons={[{
+          handlerFunc: () => setShowModal(true),
+          slot: "primary",
+          text: (
+            <IonIcon color="dark" slot="icon-only" icon={personAddOutline} />
+          ),
+        }]}
+      />
 
       <RegisterCustomerModal isOpen={showModal} handleClose={() => setShowModal(false)} />
 

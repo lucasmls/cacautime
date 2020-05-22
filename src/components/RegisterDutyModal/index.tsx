@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonDatetime } from '@ionic/react';
+import { IonModal, IonButton, IonItem, IonInput, IonLabel, IonDatetime } from '@ionic/react';
 
+import Header from '../Header'
 import './styles.css';
 
 interface Props {
@@ -19,18 +20,14 @@ const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
 
   return (
     <IonModal isOpen={isOpen} swipeToClose={true} onDidDismiss={handleModalDismiss} cssClass="register-duty-modal">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Cadastrar plantão</IonTitle>
-          <IonButtons slot="primary" onClick={handleModalDismiss}>
-            <IonButton>
-              <IonText>
-                Fechar
-              </IonText>
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title="Cadastrar plantão"
+        buttons={[{
+          handlerFunc: handleModalDismiss,
+          slot: "primary",
+          text: "Fechar",
+        }]}
+      />
 
       <div className="ion-padding-horizontal ion-padding-vertical register-duty-container">
         <form>

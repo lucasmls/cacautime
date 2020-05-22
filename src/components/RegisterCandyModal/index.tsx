@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
-import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonText, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
+import { IonModal, IonButton, IonItem, IonInput, IonLabel, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
 
 import { registerDutyValidation } from '../../validators'
@@ -9,6 +9,7 @@ import { sanitizePrice } from '../../utils/money';
 import { api } from '../../services/api';
 import { candiesList } from '../../store/candies'
 import Candy from '../../interfaces/Candy';
+import Header from '../Header'
 
 import './styles.css';
 interface Props {
@@ -66,18 +67,14 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
 
   return (
     <IonModal cssClass="register-candy-modal" isOpen={isOpen} swipeToClose={true} onDidDismiss={handleModalDismiss}>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Cadastrar doce</IonTitle>
-          <IonButtons slot="primary" onClick={handleModalDismiss}>
-            <IonButton>
-              <IonText>
-                Fechar
-              </IonText>
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <Header
+        title="Cadastrar doce"
+        buttons={[{
+          handlerFunc: handleModalDismiss,
+          slot: "primary",
+          text: "Fechar",
+        }]}
+      />
 
       <IonLoading
         isOpen={isSubmitting}
