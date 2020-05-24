@@ -1,21 +1,28 @@
 import React from 'react';
 import './styles.css'
+import { toBRL } from '../../utils/money';
 
-const ResultsTable: React.FC = () => {
+interface Props {
+  subTotal: number;
+  paidAmount: number;
+  scheduledAmount: number;
+}
+
+const ResultsTable = ({ subTotal, paidAmount, scheduledAmount }: Props) => {
   return (
     <table className="results-table">
       <thead>
         <tr>
-          <th>Subtotal</th>
+          <th>Total</th>
           <th>A receber</th>
           <th>Recebido</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>60$</td>
-          <td>35$</td>
-          <td>25$</td>
+          <td>{toBRL(subTotal)}</td>
+          <td>{toBRL(scheduledAmount)}</td>
+          <td>{toBRL(paidAmount)}</td>
         </tr>
       </tbody>
     </table>

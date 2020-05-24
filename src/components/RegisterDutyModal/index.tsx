@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Header from '../Header'
 import { registerDutyValidation } from '../../validators'
 import { toEnUSDate } from '../../utils/date'
-import Duty from '../../interfaces/Duty'
+import { Duty } from '../../interfaces/Duty'
 import { api } from '../../services/api';
 
 import './styles.css';

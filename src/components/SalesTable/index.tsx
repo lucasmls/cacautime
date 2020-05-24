@@ -1,9 +1,30 @@
 import React from 'react';
 import { IonBadge } from '@ionic/react';
+import { Sale } from '../../interfaces/Duty'
 
 import './styles.css'
 
-const SalesTable: React.FC = () => {
+interface Props {
+  sales: Sale[]
+}
+
+const SalesTable = ({ sales }: Props) => {
+  const STATUS_TAG_COLOR = {
+    "paid": "success",
+    "not_paid": "warning"
+  }
+
+  const STATUS_TRANSLATION = {
+    "paid": "Pago",
+    "not_paid": "Não pago"
+  }
+
+  const PAYMENT_METHOD = {
+    "money": "Dinheiro",
+    "transfer": "Transferência",
+    "scheduled": "Agendado"
+  }
+
   return (
     <table className="sales-table">
       <thead>
@@ -15,38 +36,18 @@ const SalesTable: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Lucas Mendes</td>
-          <td>Palha Italiana</td>
-          <td>
-            <IonBadge color="success">Pago</IonBadge>
-          </td>
-          <td>Transferência</td>
-        </tr>
-        <tr>
-          <td>Laisla Pinto Coelho</td>
-          <td>Bolo no Pote - Brigadeiro</td>
-          <td>
-            <IonBadge color="warning">Não pago</IonBadge>
-          </td>
-          <td>Agendado</td>
-        </tr>
-        <tr>
-          <td>Lucas Mendes</td>
-          <td>Palha Italiana</td>
-          <td>
-            <IonBadge color="success">Pago</IonBadge>
-          </td>
-          <td>Transferência</td>
-        </tr>
-        <tr>
-          <td>Laisla Pinto Coelho</td>
-          <td>Bolo no Pote - Brigadeiro</td>
-          <td>
-            <IonBadge color="warning">Não pago</IonBadge>
-          </td>
-          <td>Agendado</td>
-        </tr>
+        {sales.map(sale => (
+          <tr key={sale.id}>
+            <td>{sale.customer_name}</td>
+            <td>{sale.candy_name}</td>
+            <td>
+              <IonBadge style={{marginTop: "5px"}} color={STATUS_TAG_COLOR[sale.status]}>
+                {STATUS_TRANSLATION[sale.status]}
+              </IonBadge>
+            </td>
+            <td>{PAYMENT_METHOD[sale.payment_method]}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
