@@ -18,7 +18,7 @@ interface Props {
 
 interface FormData {
   date: string;
-  quantity: number;
+  candyQuantity: number;
 }
 
 const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
@@ -30,7 +30,7 @@ const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
     resetForm,
     isSubmitting,
   } = useFormik({
-    initialValues: { date: toEnUSDate(new Date()), quantity: 1 },
+    initialValues: { date: toEnUSDate(new Date()), candyQuantity: 1 },
     onSubmit: handleSubmit,
     validateOnChange: false,
     validationSchema: registerDutyValidation,
@@ -98,9 +98,9 @@ const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
 
           <IonItem className="register-duty-item">
             <IonLabel>Quantidade de Doces</IonLabel>
-            <IonInput className="candy-quantity" type="number" value={values.quantity} placeholder="15" onIonChange={e => setFieldValue("quantity", parseInt(e.detail.value!))} />
+            <IonInput className="candy-quantity" type="number" value={values.candyQuantity} placeholder="15" onIonChange={e => setFieldValue("candyQuantity", parseInt(e.detail.value!))} />
           </IonItem>
-          <span className={classnames({ 'validation-message': true, 'hide': !errors.quantity })}>{errors.quantity}</span>
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.candyQuantity })}>{errors.candyQuantity}</span>
         </form>
 
         <IonButton className="register-duty-btn" expand="block" color="primary" onClick={() => submit()}>Salvar</IonButton>

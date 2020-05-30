@@ -1,7 +1,7 @@
 export interface Duty {
   id: number,
   date: string,
-  quantity: number,
+  candyQuantity: number,
 }
 
 export interface Sale {

@@ -21,7 +21,7 @@ const registerDutyValidation =  Yup.object().shape({
   date: Yup.string()
     .required('O campo de data é obrigatório'),
 
-  quantity: Yup.number()
+  candyQuantity: Yup.number()
     .required('O campo de quantidade é obrigatório')
     .min(1, 'O valor mínimo de doces é 1')
 })
