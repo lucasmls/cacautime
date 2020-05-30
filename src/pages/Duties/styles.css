@@ -1,0 +1,10 @@
+.duty-item {
+  background-color: var(--ion-color-light-tint);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  padding: 10px;
+}

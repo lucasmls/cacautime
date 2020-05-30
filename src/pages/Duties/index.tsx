@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
-import { IonContent, IonPage, IonText, IonIcon } from '@ionic/react';
-import { addOutline } from 'ionicons/icons';
+import { IonContent, IonPage, IonIcon, IonItem, IonAvatar, IonLabel } from '@ionic/react';
+import { addOutline, medkitOutline } from 'ionicons/icons';
 
-import SalesTable from '../../components/SalesTable'
-import ResultTable from '../../components/ResultsTable'
 import RegisterDutyModal from '../../components/RegisterDutyModal'
 
 import './styles.css';
 import Header from '../../components/Header';
 import DutiesLoader from './DutiesLoader'
 import { api } from '../../services/api';
-import { ConsolidatedDuty } from '../../interfaces/Duty';
-import { consolidatedDutiesList } from '../../store/duties'
+import { Duty } from '../../interfaces/Duty';
+import { dutiesList } from '../../store/duties'
 import { toPtBRDate } from '../../utils/date';
 
 const Duties: React.FC = () => {
-  const [consolidatedDuties, setConsolidatedDuties] = useRecoilState(consolidatedDutiesList) as [ConsolidatedDuty[], (c: ConsolidatedDuty[]) => null]
+  const [duties, setDuties] = useRecoilState(dutiesList) as [Duty[], (c: Duty[]) => null]
   
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get<ConsolidatedDuty[]>('/duty/sales')
-      setConsolidatedDuties([...data])
+      const { data } = await api.get<Duty[]>('/duty')
+      setDuties([...data])
       setIsLoading(false)
     })()
-  }, [setConsolidatedDuties])
+  }, [setDuties])
 
   return (
     <IonPage>
@@ -49,13 +47,19 @@ const Duties: React.FC = () => {
             <DutiesLoader />
           ) : (
             <>
-              {consolidatedDuties.map(duty => (
+              {duties.map(duty => (
                 <div className="duty" key={duty.id}>
-                  <IonText color="dark">
-                    <h4>Plantão {toPtBRDate(new Date(duty.date))} - ({duty.sales.length}/{duty.quantity}) Doces</h4>
-                  </IonText>
-                  <SalesTable sales={duty.sales} />
-                  <ResultTable subTotal={duty.subtotal} paidAmount={duty.paid_amount} scheduledAmount={duty.scheduled_amount} />
+                  <IonItem className="customer-item" key={String(duty.id)}>
+                    <IonAvatar slot="start">
+                      <div className="duty-item">
+                        <IonIcon icon={medkitOutline} size="large" />
+                      </div>
+                    </IonAvatar>
+                    <IonLabel>
+                      <h3>Plantão dia: <b>{toPtBRDate(new Date(duty.date))}</b></h3>
+                      <p>Doces levados: <b>{duty.candyQuantity}</b></p>
+                    </IonLabel>
+                  </IonItem>
                 </div>
               ))}
             </>
