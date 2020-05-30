@@ -4,5 +4,5 @@ export const toEnUSDate = (date: Date) => {
 }
 
 export const toPtBRDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US').format(date)
+  return new Intl.DateTimeFormat('pt-BR').format(date)
 }
