@@ -9,6 +9,7 @@ import RegisterDutyModal from '../../components/RegisterDutyModal'
 
 import './styles.css';
 import Header from '../../components/Header';
+import DutiesLoader from './DutiesLoader'
 import { api } from '../../services/api';
 import { ConsolidatedDuty } from '../../interfaces/Duty';
 import { consolidatedDutiesList } from '../../store/duties'
@@ -45,7 +46,7 @@ const Duties: React.FC = () => {
 
       <IonContent className="ion-padding-horizontal">
           {isLoading ? (
-            <h1>Loading...</h1>
+            <DutiesLoader />
           ) : (
             <>
               {consolidatedDuties.map(duty => (
