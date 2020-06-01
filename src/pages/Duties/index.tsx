@@ -108,7 +108,7 @@ const Duties: React.FC = () => {
                     </IonItemOption>
                   </IonItemOptions>
 
-                  <IonItem className="duty-item" key={String(duty.id)}>
+                  <IonItem className="duty-item" key={String(duty.id)} routerLink={`/duty/${duty.id}`} detail={true}>
                     <IonAvatar slot="start">
                       <div className="duty-item-icon">
                         <IonIcon icon={medkitOutline} size="large" />

@@ -36,6 +36,7 @@ import './theme/variables.css';
 import Duties from './pages/Duties';
 import Customers from './pages/Customers'
 import Candies from './pages/Candies'
+import Duty from './pages/Duty';
 
 const App: React.FC = () => (
   <IonApp>
@@ -44,6 +45,7 @@ const App: React.FC = () => (
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/duties" component={Duties} exact={true} />
+            <Route path="/duty/:id" component={Duty} exact={true} />
             <Route path="/customers" component={Customers} exact={true} />
             <Route path="/candies" component={Candies} exact={true} />
             <Route path="/" render={() => <Redirect to="/duties" />} exact={true} />
