@@ -27,8 +27,7 @@ const RegisterCandyModal = ({ isOpen = false, handleClose }: Props) => {
 
   const {
     setFieldValue,
-    handleSubmit:
-    submit,
+    handleSubmit: submit,
     values,
     errors,
     resetForm,
