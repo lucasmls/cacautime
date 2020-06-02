@@ -5,7 +5,7 @@ interface Props {
   title: string
   buttons: {
     text: React.ReactNode
-    slot: "primary" | "secondary"
+    slot: "primary" | "secondary" | "start"
     handlerFunc(): void
   }[]
 }
