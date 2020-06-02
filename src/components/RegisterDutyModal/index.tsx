@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik';
 import { IonModal, IonButton, IonItem, IonInput, IonLabel, IonDatetime, IonLoading, IonToast } from '@ionic/react';
 import classnames from 'classnames'
@@ -10,6 +11,7 @@ import { Duty } from '../../interfaces/Duty'
 import { api } from '../../services/api';
 
 import './styles.css';
+import { dutiesList } from '../../store/duties';
 
 interface Props {
   isOpen: boolean
@@ -22,6 +24,8 @@ interface FormData {
 }
 
 const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
+  const [duties, setDuties] = useRecoilState(dutiesList) as [Duty[], (c: Duty[]) => null]
+
   const {
     setFieldValue,
     handleSubmit: submit,
@@ -41,9 +45,10 @@ const RegisterDutyModal = ({ isOpen = false, handleClose }: Props) => {
 
   async function handleSubmit(data: FormData) {
     try {
-      await api.post<Duty>("/duty", data)
+      const { data: registeredDuty } = await api.post<Duty>("/duty", data)
       resetForm()
       setShowSuccessToast(true)
+      setDuties([...duties, registeredDuty])
     } catch (error) {
       console.error(error)
       setShowFailureToast(true)
