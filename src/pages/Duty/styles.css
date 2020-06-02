@@ -8,3 +8,7 @@
 .footer-toolbar {
   --background: var(--ion-color-light-tint);
 }
+
+.results-table-container {
+  padding: 0px 10px 0px 10px;
+}

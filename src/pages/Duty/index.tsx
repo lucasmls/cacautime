@@ -177,11 +177,13 @@ const Duty = () => {
       </IonContent>
       <IonFooter>
         <IonToolbar className="footer-toolbar">
-          <ResultsTable
-            subTotal={12312}
-            paidAmount={123}
-            scheduledAmount={2133}
-          />
+          <div className="results-table-container">
+            <ResultsTable
+              subTotal={12312}
+              paidAmount={123}
+              scheduledAmount={2133}
+            />
+          </div>
         </IonToolbar>
       </IonFooter>
     </IonPage>
