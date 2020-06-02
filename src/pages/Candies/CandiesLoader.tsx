@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonList, IonItem, IonAvatar, IonSkeletonText, IonLabel } from '@ionic/react';
 
-const LoadingCustomers: React.FC = () => {
+const LoadingCandies: React.FC = () => {
   return (
     <IonList>
       <IonItem>
@@ -125,4 +125,4 @@ const LoadingCustomers: React.FC = () => {
   );
 }
 
-export default LoadingCustomers;
+export default LoadingCandies;
