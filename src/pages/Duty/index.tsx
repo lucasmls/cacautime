@@ -4,6 +4,7 @@ import { IonPage, IonHeader, IonToolbar, IonButtons, IonContent, IonBackButton, 
 
 import ResultsTable from '../../components/ResultsTable'
 import SalesTable from '../../components/SalesTable'
+import LoadingDuty from './DutyLoader'
 
 import './styles.css'
 import { ConsolidatedDuty } from '../../interfaces/Duty';
@@ -38,7 +39,7 @@ const Duty = () => {
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (
-          <h2>Loading...</h2>
+          <LoadingDuty />
         ) : (
           <>
             <div slot="fixed" className="duty-detail-heading ion-padding-vertical ion-padding-horizontal">
@@ -62,9 +63,7 @@ const Duty = () => {
       </IonContent>
 
       <IonFooter>
-        {isLoading ? (
-          <h2>Loading...</h2>
-        ) : (
+        {!isLoading && (
           <IonToolbar className="footer-toolbar">
             <div className="results-table-container">
               <ResultsTable
