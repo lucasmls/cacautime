@@ -38,14 +38,14 @@ const SalesTable = ({ sales }: Props) => {
       <tbody>
         {sales.map(sale => (
           <tr key={sale.id}>
-            <td>{sale.customer_name}</td>
-            <td>{sale.candy_name}</td>
+            <td>{sale.customerName}</td>
+            <td>{sale.candyName}</td>
             <td>
               <IonBadge style={{marginTop: "5px"}} color={STATUS_TAG_COLOR[sale.status]}>
                 {STATUS_TRANSLATION[sale.status]}
               </IonBadge>
             </td>
-            <td>{PAYMENT_METHOD[sale.payment_method]}</td>
+            <td>{PAYMENT_METHOD[sale.paymentMethod]}</td>
           </tr>
         ))}
       </tbody>

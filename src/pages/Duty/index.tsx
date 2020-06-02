@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonContent, IonBackButton, IonTitle, IonFooter, IonText } from '@ionic/react';
 
@@ -6,11 +6,23 @@ import ResultsTable from '../../components/ResultsTable'
 import SalesTable from '../../components/SalesTable'
 
 import './styles.css'
+import { ConsolidatedDuty } from '../../interfaces/Duty';
+import { api } from '../../services/api';
+import { toPtBRDate } from '../../utils/date';
 
 const Duty = () => {
   const { id } = useParams();
+  const [duty, setDuty] = useState() as [ConsolidatedDuty, (c: ConsolidatedDuty) => null]
 
-  console.log(`Fetch sales of duty with id: ${id}`)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await api.get<ConsolidatedDuty>(`duty/${id}/sales`)
+      setDuty(data)
+      setIsLoading(false)
+    })()
+  }, [id, setDuty])
 
   return (
     <IonPage>
@@ -25,166 +37,44 @@ const Duty = () => {
       </IonHeader>
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
-        <div slot="fixed" className="duty-detail-heading ion-padding-vertical ion-padding-horizontal">
-          <IonText color="dark">
-            <b>Data do plantão: </b> <span>20/03/2020</span>
-          </IonText>
-          <br/>
-          <IonText color="dark">
-            <b>Total de doces levados: </b> <span>20</span>
-          </IonText>
-        </div>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <>
+            <div slot="fixed" className="duty-detail-heading ion-padding-vertical ion-padding-horizontal">
+              <IonText color="dark">
+                <b>Data do plantão: </b>
+                <span>
+                  {(duty && toPtBRDate(new Date(duty.date))) || ""}
+                </span>
+              </IonText>
+              <br/>
+              <IonText color="dark">
+                <b>Total de doces levados: </b> <span>{duty?.quantity}</span>
+              </IonText>
+            </div>
 
-        <div style={{ marginTop: "70px" }}>
-          <SalesTable
-            sales={[
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 1,
-                payment_method: "money",
-                status: "paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 3,
-                payment_method: "scheduled",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 2,
-                payment_method: "money",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 4,
-                payment_method: "money",
-                status: "paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 5,
-                payment_method: "scheduled",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 6,
-                payment_method: "money",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 7,
-                payment_method: "money",
-                status: "paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 8,
-                payment_method: "scheduled",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 9,
-                payment_method: "money",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 10,
-                payment_method: "money",
-                status: "paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 11,
-                payment_method: "scheduled",
-                status: "not_paid",
-              },
-              {
-                candy_id: 1,
-                candy_name: "Palha Italiana - Ninho",
-                candy_price: 500,
-                customer_id: 1,
-                customer_name: "Lucas Mendes",
-                customer_phone: "21983996543",
-                id: 12,
-                payment_method: "money",
-                status: "not_paid",
-              },
-            ]}
-          />
-        </div>
-        
+            <div style={{ marginTop: "70px" }}>
+              <SalesTable sales={duty?.sales || []} />
+            </div>
+          </>
+        )}
       </IonContent>
+
       <IonFooter>
-        <IonToolbar className="footer-toolbar">
-          <div className="results-table-container">
-            <ResultsTable
-              subTotal={12312}
-              paidAmount={123}
-              scheduledAmount={2133}
-            />
-          </div>
-        </IonToolbar>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <IonToolbar className="footer-toolbar">
+            <div className="results-table-container">
+              <ResultsTable
+                subTotal={duty?.subtotal}
+                paidAmount={duty?.paidAmount}
+                scheduledAmount={duty?.scheduledAmount}
+              />
+            </div>
+          </IonToolbar>
+        )}
       </IonFooter>
     </IonPage>
   );

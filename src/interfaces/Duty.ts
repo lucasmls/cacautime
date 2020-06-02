@@ -4,24 +4,24 @@ export interface Duty {
   candyQuantity: number,
 }
 
-export interface Sale {
-  id: number;
-  candy_id: number;
-  candy_name: string;
-  candy_price: number;
-  customer_id: number;
-  customer_name: string;
-  customer_phone: string;
-  payment_method: "money" | "transfer" | "scheduled";
-  status: "paid" | "not_paid";
-}
-
 export interface ConsolidatedDuty {
   id: number;
   date: string;
   quantity: number;
   subtotal: number;
-  paid_amount: number;
-  scheduled_amount: number;
+  paidAmount: number;
+  scheduledAmount: number;
   sales: Sale[];
+}
+
+export interface Sale {
+  id: number;
+  candyId: number;
+  candyName: string;
+  candyPrice: number;
+  customerId: number;
+  customerName: string;
+  customerPhone: string;
+  paymentMethod: "money" | "transfer" | "scheduled";
+  status: "paid" | "not_paid";
 }
