@@ -7,7 +7,7 @@ import SalesTable from '../../components/SalesTable'
 import LoadingDuty from './DutyLoader'
 
 import './styles.css'
-import { ConsolidatedDuty } from '../../interfaces/Duty';
+import { ConsolidatedDuty, Sale } from '../../interfaces/Duty';
 import { api } from '../../services/api';
 import { toPtBRDate } from '../../utils/date';
 import { addOutline } from 'ionicons/icons';
@@ -27,6 +27,11 @@ const Duty = () => {
       setIsLoading(false)
     })()
   }, [id, setDuty])
+
+
+  const updateSales = (updatedSales: Sale[]) => {
+    setDuty({...duty, sales: updatedSales})
+  }
 
   return (
     // @TODO => use the header component
@@ -68,7 +73,7 @@ const Duty = () => {
             </div>
 
             <div style={{ marginTop: "70px" }}>
-              <SalesTable sales={duty?.sales || []} />
+              <SalesTable sales={duty?.sales || []} updateSales={updateSales} />
             </div>
           </>
         )}
