@@ -28,13 +28,16 @@ const registerDutyValidation = Yup.object().shape({
 
 const registerSaleValidation = Yup.object().shape({
   customerId: Yup.number()
-    .required('O campo de usuário é obrigatório'),
+    .required('O campo de usuário é obrigatório')
+    .nullable(),
 
   dutyId: Yup.number()
-    .required('O campo de plantão é obrigatório'),
+    .required('O campo de plantão é obrigatório')
+    .nullable(),
 
   candyId: Yup.number()
-    .required('O campo de doce é obrigatório'),
+    .required('O campo de doce é obrigatório')
+    .nullable(),
 
   status: Yup.string()
     .oneOf(["paid", "not_paid"])

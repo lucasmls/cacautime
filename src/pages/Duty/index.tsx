@@ -47,7 +47,7 @@ const Duty = () => {
         </IonToolbar>
       </IonHeader>
 
-      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} />
+      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} dutyId={id} />
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (

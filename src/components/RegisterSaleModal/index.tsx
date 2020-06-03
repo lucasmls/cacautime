@@ -4,26 +4,33 @@ import { useFormik } from 'formik'
 import { IonModal, IonButton, IonItem, IonLabel, IonLoading, IonToast, IonSelect, IonSelectOption } from '@ionic/react';
 import classnames from 'classnames'
 
-import { registerSaleValidation } from '../../validators';
-import { sanitizePrice } from '../../utils/money';
-import { api } from '../../services/api';
-import { candiesList } from '../../store/candies'
-import Candy from '../../interfaces/Candy';
 import Header from '../Header'
+import { api } from '../../services/api';
+import Candy from '../../interfaces/Candy';
+import Customer from '../../interfaces/Customer';
+import { candiesList } from '../../store/candies'
+import { customersList } from '../../store/customers';
+import { registerSaleValidation } from '../../validators';
+
 import './styles.css';
 
 interface Props {
   isOpen: boolean
   handleClose(): void
+  dutyId: number
 }
 
 interface FormData {
-  name: string;
-  price: string;
+  dutyId: number | null;
+  customerId: number | null;
+  candyId: number | null;
+  status: "paid" | "not_paid";
+  paymentMethod: "money" | "transfer" | "scheduled";
 }
 
-const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
+const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
   const [candies, setCandies] = useRecoilState(candiesList) as [Candy[], (c: Candy[]) => null]
+  const [customers, setCustomers] = useRecoilState(customersList) as [Customer[], (c: Customer[]) => null]
 
   const {
     setFieldValue,
@@ -33,7 +40,7 @@ const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
     resetForm,
     isSubmitting,
   } = useFormik({
-    initialValues: { name: '', price: '' },
+    initialValues: { dutyId: Number(dutyId), candyId: null, customerId: null, status: "paid", paymentMethod: "money" },
     onSubmit: handleSubmit,
     validateOnChange: false,
     validationSchema: registerSaleValidation,
@@ -43,16 +50,10 @@ const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
   const [showFailureToast, setShowFailureToast] = useState(false);
 
   async function handleSubmit (data: FormData) {
-    const payload = {
-      ...data,
-      price: sanitizePrice(data.price)
-    }
-
     try {
-      const { data: candy } = await api.post<Candy>("/candy", payload)
+      const { data: sale } = await api.post<Candy>("/sale", data)
       resetForm()
       setShowSuccessToast(true)
-      setCandies([...candies, candy])
     } catch (error) {
       console.error(error)
       setShowFailureToast(true)
@@ -77,7 +78,7 @@ const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
 
       <IonLoading
         isOpen={isSubmitting}
-        message={'Salvando o venda...'}
+        message={'Salvando a venda...'}
         duration={5000}
       />
 
@@ -101,61 +102,51 @@ const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
         <div>
           <IonItem className="register-sale-item">
             <IonLabel>Cliente</IonLabel>
-            <IonSelect value={null} placeholder="Fulano de tal" onIonChange={e => console.log(e.detail.value)}>
-              <IonSelectOption value={1}>Lucas Mendes</IonSelectOption>
-              <IonSelectOption value={2}>Laisla Pinto Coelho</IonSelectOption>
+            <IonSelect value={values.customerId} placeholder="Fulano de tal" onIonChange={e => setFieldValue('customerId', Number(e.detail.value!))}>
+              
+              {customers.map(customer => (                
+                <IonSelectOption key={customer.id} value={customer.id}>{customer.name}</IonSelectOption>
+              ))}
             </IonSelect>
           </IonItem>
-          {/* <span className={classnames({ 'validation-message': true, 'hide': false })}>Este campo é obrigatório</span> */}
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.customerId })}>{errors.customerId}</span>
 
           <IonItem className="register-sale-item">
             <IonLabel>Doce</IonLabel>
-            <IonSelect value={null} placeholder="Palha Italiana" onIonChange={e => console.log(e.detail.value)}>
+            <IonSelect value={values.candyId} placeholder="Palha Italiana" onIonChange={e => setFieldValue('candyId', Number(e.detail.value!))}>
               {candies.map(candy => (                
                 <IonSelectOption key={candy.id} value={candy.id}>{candy.name}</IonSelectOption>
               ))}
             </IonSelect>
           </IonItem>
-          {/* <span className={classnames({ 'validation-message': true, 'hide': false })}>Este campo é obrigatório</span> */}
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.candyId })}>{errors.candyId}</span>
 
           <IonItem className="register-sale-item">
             <IonLabel>Status</IonLabel>
             <IonSelect
               interface="popover"
               placeholder="Pago"
-              onIonChange={e => console.log(e.detail.value)}
-              value={""}>
+              onIonChange={e => setFieldValue('status', e.detail.value!)}
+              value={values.status}>
               <IonSelectOption value="paid">Pago</IonSelectOption>
               <IonSelectOption value="not_paid">Não pago</IonSelectOption>
             </IonSelect>
           </IonItem>
-          {/* <span className={classnames({ 'validation-message': true, 'hide': false })}>Este campo é obrigatório</span> */}
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.status })}>{errors.status}</span>
 
           <IonItem className="register-sale-item">
             <IonLabel>Meio de pagamento</IonLabel>
             <IonSelect
               interface="popover"
               placeholder="Dinheiro"
-              onIonChange={e => console.log(e.detail.value)}
-              value={""}>
+              onIonChange={e => setFieldValue('paymentMethod', e.detail.value!)}
+              value={values.paymentMethod}>
               <IonSelectOption value="money">Dinheiro</IonSelectOption>
               <IonSelectOption value="transfer">Transferência</IonSelectOption>
               <IonSelectOption value="scheduled">Agendado</IonSelectOption>
             </IonSelect>
           </IonItem>
-          <span className={classnames({ 'validation-message': true, 'hide': false })}>Este campo é obrigatório</span>
-
-          {/* <IonItem className="register-sale-item"> 
-            <IonLabel>Preço</IonLabel>
-            <IonInput
-              className="candy-quantity"
-              placeholder="15"
-              type="number"
-              value={values.price}
-              onIonChange={e => setFieldValue('price', e.detail.value!)}
-            />
-          </IonItem>
-          <span className={classnames({ 'validation-message': true, 'hide': !errors.price })}>{errors.price}</span> */}
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.paymentMethod })}>{errors.paymentMethod}</span>
         </div>
 
         <IonButton className="register-sale-btn" expand="block" color="primary" onClick={() => submit()}>
