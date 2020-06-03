@@ -26,21 +26,24 @@ const SalesTable = ({ sales, updateSales }: Props) => {
     "scheduled": "Agendado"
   }
 
-  const handleStatusChange = (sale: Sale) => {
-    const status = Object.keys(STATUS_TRANSLATION)
+  const handleStatusAndPaymentMethodChange = (key: "status" | "paymentMethod", sale: Sale) => {
+    const saleColumn = {
+      status: Object.keys(STATUS_TRANSLATION),
+      paymentMethod: Object.keys(PAYMENT_METHOD),
+    }
 
-    for (let index = 0; index < status.length; index++) {
-      const statusItem = status[index];
+    for (let index = 0; index < saleColumn[key].length; index++) {
+      const columnItem = saleColumn[key][index];
 
-      if (statusItem === sale.status && status[index +1]) {
+      if (columnItem === sale[key] && saleColumn[key][index +1]) {
         // @ts-ignore/line
-        sale.status = status[index +1]
+        sale[key] = saleColumn[key][index +1]
         break;
       }
 
-      if (statusItem === sale.status && !status[index +1]) {
+      if (columnItem === sale[key] && !saleColumn[key][index +1]) {
         // @ts-ignore/line
-        sale.status = status[0]
+        sale[key] = saleColumn[key][0]
         break;
       }
     }
@@ -72,12 +75,12 @@ const SalesTable = ({ sales, updateSales }: Props) => {
               <IonBadge
                 className="status-badge"
                 color={STATUS_TAG_COLOR[sale.status]}
-                onClick={() => handleStatusChange(sale)}
+                onClick={() => handleStatusAndPaymentMethodChange("status", sale)}
               >
                 {STATUS_TRANSLATION[sale.status]}
               </IonBadge>
             </td>
-            <td>{PAYMENT_METHOD[sale.paymentMethod]}</td>
+            <td onClick={() => handleStatusAndPaymentMethodChange("paymentMethod", sale)}>{PAYMENT_METHOD[sale.paymentMethod]}</td>
           </tr>
         ))}
       </tbody>
