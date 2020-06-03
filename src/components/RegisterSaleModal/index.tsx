@@ -60,6 +60,16 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
     })()
   }, [candies.length, setCandies])
 
+  useEffect(() => {
+    (async () => {
+      if (!customers.length) {
+        const { data } = await api.get<Customer[]>('/customer')
+        setCustomers([...data])
+        setIsLoading(false)
+      }
+    })()
+  }, [customers.length, setCustomers])
+
   async function handleSubmit (data: FormData) {
     try {
       await api.post<Candy>("/sale", data)
