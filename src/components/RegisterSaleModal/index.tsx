@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
 import { IonModal, IonButton, IonItem, IonLabel, IonLoading, IonToast, IonSelect, IonSelectOption } from '@ionic/react';
@@ -48,10 +48,21 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showFailureToast, setShowFailureToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    (async () => {
+      if (!candies.length) {
+        const { data } = await api.get<Candy[]>("/candy")
+        setCandies([...data])
+        setIsLoading(false)
+      }
+    })()
+  }, [candies.length, setCandies])
 
   async function handleSubmit (data: FormData) {
     try {
-      const { data: sale } = await api.post<Candy>("/sale", data)
+      await api.post<Candy>("/sale", data)
       resetForm()
       setShowSuccessToast(true)
     } catch (error) {
@@ -74,6 +85,12 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
           slot: "primary",
           text: "Fechar",
         }]}
+      />
+
+      <IonLoading
+        isOpen={isLoading}
+        message={'Buscando informações...'}
+        duration={5000}
       />
 
       <IonLoading
