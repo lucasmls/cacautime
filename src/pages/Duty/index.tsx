@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
+import debounce from 'lodash.debounce';
 import { IonPage, IonToolbar, IonContent, IonBackButton, IonFooter, IonText, IonIcon } from '@ionic/react';
 
 import ResultsTable from '../../components/ResultsTable'
@@ -29,9 +30,16 @@ const Duty = () => {
     })()
   }, [id, setDuty])
 
+  const updateDutySale = useCallback(
+    debounce(async (sale: Sale) => {
+      await api.put<Sale>(`sale/${sale.id}`, sale)
+    }, 500),
+    [],
+  )
 
-  const updateSales = (updatedSales: Sale[]) => {
+  const updateSales = (updatedSales: Sale[], updatedSale: Sale) => {
     setDuty({...duty, sales: updatedSales})
+    updateDutySale(updatedSale)
   }
 
   return (

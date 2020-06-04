@@ -6,7 +6,7 @@ import './styles.css'
 
 interface Props {
   sales: Sale[]
-  updateSales(updatedSales: Sale[]): void
+  updateSales(updatedSales: Sale[], updatedSale: Sale): void
 }
 
 const SalesTable = ({ sales, updateSales }: Props) => {
@@ -53,7 +53,7 @@ const SalesTable = ({ sales, updateSales }: Props) => {
       return [...acc, saleToReturn]
     }, [] as Sale[])
 
-    updateSales(updatedSales)
+    updateSales(updatedSales, sale)
   }
 
   return (
