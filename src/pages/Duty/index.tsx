@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonContent, IonBackButton, IonTitle, IonFooter, IonText, IonButton, IonIcon } from '@ionic/react';
+import { IonPage, IonToolbar, IonContent, IonBackButton, IonFooter, IonText, IonIcon } from '@ionic/react';
 
 import ResultsTable from '../../components/ResultsTable'
 import SalesTable from '../../components/SalesTable'
@@ -12,6 +12,7 @@ import { api } from '../../services/api';
 import { toPtBRDate } from '../../utils/date';
 import { addOutline } from 'ionicons/icons';
 import RegisterSaleModal from '../../components/RegisterSaleModal';
+import Header from '../../components/Header';
 
 const Duty = () => {
   const { id } = useParams();
@@ -34,23 +35,26 @@ const Duty = () => {
   }
 
   return (
-    // @TODO => use the header component
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton text="Voltar" />
-          </IonButtons>
-
-          <IonTitle>Vendas</IonTitle>
-
-          <IonButtons slot="primary" onClick={() => setShowModal(true)}>
-            <IonButton>
+      <Header
+        title="Vendas"
+        buttons={[
+          {
+            handlerFunc: () => null,
+            slot: "start",
+            text: (
+              <IonBackButton text="Voltar" />
+            ),
+          },
+          {
+            handlerFunc: () => setShowModal(true),
+            slot: "primary",
+            text: (
               <IonIcon color="dark" slot="icon-only" icon={addOutline} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+            ),
+          }
+        ]}
+      />
 
       <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} dutyId={id} />
 
