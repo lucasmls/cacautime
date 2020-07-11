@@ -27,9 +27,9 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-super-responsive-table": "^5.1.1",
-    "recoil": "^0.0.7",
+    "recoil": "0.0.10",
     "typescript": "^3.9.6",
-    "yup": "^0.29.0"
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,7 +55,7 @@
   "devDependencies": {
     "@capacitor/cli": "^2.2.1",
     "@types/lodash.debounce": "^4.0.6",
-    "@types/yup": "^0.29.0"
+    "@types/yup": "^0.29.3"
   },
   "description": "An Ionic project"
 }
