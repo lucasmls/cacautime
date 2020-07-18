@@ -20,11 +20,7 @@ import Duty from '../pages/Duty';
 import Customers from '../pages/Customers';
 import Candies from '../pages/Candies';
 
-import { useAuth } from '../hooks';
-
 const Routes: React.FC = () => {
-  const [{ isSignedIn }] = useAuth();
-
   return (
     <IonReactRouter>
       <Switch>
@@ -39,7 +35,7 @@ const Routes: React.FC = () => {
             <PrivateRoute path="/" render={() => <Redirect to="/duties" />} exact={true} />
           </IonRouterOutlet>
       
-          <IonTabBar style={{ display: isSignedIn ? 'flex' : 'none'  }}  slot="bottom">
+          <IonTabBar slot="bottom">
             <IonTabButton tab="customers" href="/customers">
               <IonIcon icon={personOutline} />
               <IonLabel>Clientes</IonLabel>
