@@ -1,7 +1,22 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-export const api = axios.create({
+const api = axios.create({
   // @TODO => Add into .env
-  // baseURL: 'http://localhost:3000',
-  baseURL: 'https://3f3efc0b4ebe.ngrok.io',
+  baseURL: 'http://localhost:3000',
 })
+
+api.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
+  const authToken = localStorage.getItem('@auth/token');
+
+  const newConfig = {
+    ...config,
+  };
+
+  if (authToken) {
+    newConfig.headers.Authorization = `Bearer ${authToken}`;
+  }
+
+  return newConfig;
+});
+
+export { api }
