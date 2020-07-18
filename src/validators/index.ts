@@ -1,5 +1,13 @@
 import * as Yup from 'yup'
 
+const loginValidation = Yup.object().shape({
+  username: Yup.string()
+    .required('O campo de usuário é obrigatório'),
+
+  password: Yup.string()
+    .required('O campo de senha é obrigatório')
+})
+
 const registerCandyValidation = Yup.object().shape({
   name: Yup.string()
     .required('O campo de nome é obrigatório'),
@@ -49,6 +57,7 @@ const registerSaleValidation = Yup.object().shape({
 })
 
 export {
+  loginValidation,
   registerCandyValidation,
   registerCustomerValidation,
   registerDutyValidation,

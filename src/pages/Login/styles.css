@@ -1,0 +1,26 @@
+.login-page {
+  justify-content: start;
+  border: 10px solid var(--ion-color-light);
+}
+
+.company-name {
+  text-align: center;
+}
+
+.company-name h1 {
+  font-size: 36px;
+}
+
+.cacau-logo {
+  max-width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+
+.submit-btn {
+  --background: #EBB035;
+  --background-activated: #e2ac39;
+  --background-activated-opacity: #EBB035;
+  --background-focused: #EBB035;
+  --background-hover: #EBB035;
+}
