@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const api = axios.create({
   // @TODO => Add into .env
@@ -18,5 +18,19 @@ api.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig =>
 
   return newConfig;
 });
+
+api.interceptors.response.use(
+  (value: AxiosResponse): AxiosResponse => {
+    return value
+  },
+  (error: AxiosError) => {
+    const INVALID_JWT_MSG = 'Invalid or expired JWT'
+
+    if (error.response?.status === 401 && error.response.data === INVALID_JWT_MSG) {
+      window.localStorage.removeItem("@auth/token")
+      window.location.href = '/login';
+    }
+  }
+)
 
 export { api }

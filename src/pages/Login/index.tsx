@@ -42,9 +42,9 @@ const Login = () => {
   const [showFailureToast, setShowFailureToast] = useState(false);
 
   async function handleSubmit (data: FormData) {
-    const tempPayload = { ...data, email: data.username }
+    const tempPayload = { password: data.password, email: data.username }
     try {
-      const { token } = (await api.post<LoginReponse>("/login", tempPayload)).data
+      const { data: { token } } = await api.post<LoginReponse>("/login", tempPayload)
       resetForm()
       setShowSuccessToast(true)
 
