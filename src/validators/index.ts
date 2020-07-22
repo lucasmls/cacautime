@@ -10,7 +10,8 @@ const loginValidation = Yup.object().shape({
 
 const registerCandyValidation = Yup.object().shape({
   name: Yup.string()
-    .required('O campo de nome é obrigatório'),
+    .required('O campo de nome é obrigatório')
+    .max(100, 'O nome do doce deve conter no máximo 100 caracteres'),
 
   price: Yup.string()
     .required('O campo de preço é obrigatório')
@@ -22,7 +23,8 @@ const registerCustomerValidation = Yup.object().shape({
     .required('O campo de nome é obrigatório'),
 
   phone: Yup.string()
-    .required('O campo de telefone é obrigatório')
+    .min(8, 'O número de telefone deve conter pelo menos 8 caracteres')
+    .max(11, 'O número de telefone deve conter no máximo 11 caracteres')
 })
 
 const registerDutyValidation = Yup.object().shape({
