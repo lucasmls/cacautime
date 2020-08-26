@@ -15,7 +15,7 @@ import PrivateRoute from './private'
 import PublicRoute from './public'
 
 import Login from '../pages/Login';
-import Duties from '../pages/Duties';
+import Months from '../pages/Months';
 import Duty from '../pages/Duty';
 import Customers from '../pages/Customers';
 import Candies from '../pages/Candies';
@@ -28,11 +28,11 @@ const Routes: React.FC = () => {
 
         <IonTabs>
           <IonRouterOutlet>
-            <PrivateRoute path="/duties" component={Duties} />
+            <PrivateRoute path="/months" component={Months} />
             <PrivateRoute path="/duty/:id" component={Duty} exact={true} />
             <PrivateRoute path="/customers" component={Customers} exact={true} />
             <PrivateRoute path="/candies" component={Candies} exact={true} />
-            <PrivateRoute path="/" render={() => <Redirect to="/duties" />} exact={true} />
+            <PrivateRoute path="/" render={() => <Redirect to="/months" />} exact={true} />
           </IonRouterOutlet>
       
           <IonTabBar slot="bottom">
@@ -40,7 +40,7 @@ const Routes: React.FC = () => {
               <IonIcon icon={personOutline} />
               <IonLabel>Clientes</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="duties" href="/duties">
+            <IonTabButton tab="Months" href="/months">
               <IonIcon icon={calendarOutline} />
               <IonLabel>Plantões</IonLabel>
             </IonTabButton>

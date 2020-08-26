@@ -49,7 +49,7 @@ const Login = () => {
       setShowSuccessToast(true)
 
       setAuth({ token, isSignedIn: true })
-      history.push('/duties');
+      history.push('/months');
     } catch (error) {
       console.error(error)
       setShowFailureToast(true)

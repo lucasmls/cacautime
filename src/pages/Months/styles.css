@@ -1,9 +1,9 @@
-.duty-item {
+.month-item {
   --inner-padding-end: 0px;
   --padding-start: 0px;
 }
 
-.duty-item-icon {
+.month-item-icon {
   background-color: var(--ion-color-light-tint);
   display: flex;
   justify-content: center;

@@ -13,7 +13,7 @@ const PublicRoute = ({ component: Component, ...rest }: any): JSX.Element => {
           return <Component {...properties} />;
         }
 
-        return <Redirect to={{ pathname: '/duties', state: { from: properties.location } }} />;
+        return <Redirect to={{ pathname: '/months', state: { from: properties.location } }} />;
       }}
     />
   );
