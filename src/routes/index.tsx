@@ -42,7 +42,7 @@ const Routes: React.FC = () => {
             </IonTabButton>
             <IonTabButton tab="Months" href="/months">
               <IonIcon icon={calendarOutline} />
-              <IonLabel>Plantões</IonLabel>
+              <IonLabel>Meses</IonLabel>
             </IonTabButton>
             <IonTabButton tab="candies" href="/candies">
               <IonIcon src='https://image.flaticon.com/icons/svg/2913/2913787.svg' />
