@@ -74,7 +74,11 @@ const Login = () => {
         color="danger"
       />
 
-      <img className="cacau-logo" src="https://instagram.fplu9-1.fna.fbcdn.net/v/t51.2885-19/s320x320/95819673_1166153667064099_7081594411821301760_n.jpg?_nc_ht=instagram.fplu9-1.fna.fbcdn.net&_nc_ohc=k-v9bQWPlzUAX_-0niX&oh=435feadd6cb151e2a2af8680711ba547&oe=5F39309B" alt=""/>
+      <img
+        className="cacau-logo"
+        alt=""
+        src="https://instagram.fplu9-1.fna.fbcdn.net/v/t51.2885-19/s150x150/95819673_1166153667064099_7081594411821301760_n.jpg?_nc_ht=instagram.fplu9-1.fna.fbcdn.net&_nc_ohc=LQ0Khp5xCJYAX-vADuj&oh=19dd36575b83493e9c200d60648101e4&oe=5F6FBEE3"
+      />
 
       <IonItem className="ion-no-padding">
         <IonLabel>Usuário</IonLabel>
