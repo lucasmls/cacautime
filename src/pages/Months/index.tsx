@@ -55,7 +55,7 @@ const Months: React.FC = () => {
         ) : (
             <IonList>
               {months.map((month, i) => (
-                <IonItem className="month-item" key={i} routerLink={`/month/${i}`} detail={true}>
+                <IonItem className="month-item" key={i} routerLink={`/month/${month.number}/${month.year}`} detail={true}>
                   <IonAvatar slot="start">
                     <div className="month-item-icon">
                       <IonIcon icon={medkitOutline} size="large" />

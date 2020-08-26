@@ -5,13 +5,12 @@ import { IonPage, IonToolbar, IonContent, IonBackButton, IonFooter, IonText, Ion
 
 import ResultsTable from '../../components/ResultsTable';
 import SalesTable from '../../components/SalesTable';
-import LoadingDuty from './DutyLoader';
+import LoadingConsolidatedMonth from './ConsolidatedMonthLoader';
 import RegisterSaleModal from '../../components/RegisterSaleModal';
 import Header from '../../components/Header';
 
-import { ConsolidatedDuty, Sale } from '../../interfaces/Duty';
+import { ConsolidatedMonth, Sale } from '../../interfaces/Month';
 import { api } from '../../services/api';
-import { toPtBRDate } from '../../utils/date';
 import { addOutline } from 'ionicons/icons';
 
 import './styles.css';
@@ -22,22 +21,32 @@ interface Result {
   scheduledAmount: number,
 }
 
-const Duty = () => {
-  const { id } = useParams();
-  const [duty, setDuty] = useState() as [ConsolidatedDuty, (c: ConsolidatedDuty) => null]
+interface RouteParams {
+  id: string,
+  month: "01" | "02" | "03" | "04" | "05" | "06" | "07" | "08" | "09" | "10" | "11" | "12",
+  year: string,
+}
+
+const ConsolidatedMonthPage = () => {
+  const { id, month, year } = useParams<RouteParams>();
+  const [consolidatedMonth, setConsolidatedMonth] = useState() as [ConsolidatedMonth, (c: ConsolidatedMonth) => null]
 
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get<ConsolidatedDuty>(`duty/${id}/sales`)
-      setDuty(data)
-      setIsLoading(false)
+      try {
+        const { data } = await api.get<ConsolidatedMonth>(`sale/${month}/${year}`)
+        setConsolidatedMonth(data)
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
     })()
-  }, [id, setDuty])
+  }, [id, month, setConsolidatedMonth, year])
 
-  const calculateDutyResult = (sales: Sale[]): Result => {
+  const calculateConsolidatedMonthResult = (sales: Sale[]): Result => {
     const result = sales.reduce((acc, sale) => {
       const subtotal = acc.subtotal + sale.candyPrice
 
@@ -62,7 +71,7 @@ const Duty = () => {
     return result
   }
 
-  const updateDutySale = useCallback(
+  const updateConsolidatedMonthSale = useCallback(
     debounce(async (updatedSale: Sale) => {
       await api.put<Sale>(`sale/${updatedSale.id}`, updatedSale)
     }, 500),
@@ -70,10 +79,25 @@ const Duty = () => {
   )
 
   const updateSales = (updatedSales: Sale[], updatedSale: Sale) => {
-    const updatedDuty = {...duty, ...calculateDutyResult(updatedSales), sales: updatedSales }
+    const updatedConsolidatedMonth = { ...consolidatedMonth, ...calculateConsolidatedMonthResult(updatedSales), sales: updatedSales }
 
-    setDuty(updatedDuty)
-    updateDutySale(updatedSale)
+    setConsolidatedMonth(updatedConsolidatedMonth)
+    updateConsolidatedMonthSale(updatedSale)
+  }
+
+  const monthsTranslationMap = {
+    "01": "Janeiro",
+    "02": "Fevereiro",
+    "03": "Março",
+    "04": "Abril",
+    "05": "Maio",
+    "06": "Junho",
+    "07": "Julho",
+    "08": "Agosto",
+    "09": "Setembro",
+    "10": "Outubro",
+    "11": "Novembro",
+    "12": "Dezembro",
   }
 
   return (
@@ -98,31 +122,29 @@ const Duty = () => {
         ]}
       />
 
-      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} dutyId={id} />
+      {/* @TODO => Update this modal to work without Duty concept */}
+      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} dutyId={1} />
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (
-          <LoadingDuty />
+          <LoadingConsolidatedMonth />
         ) : (
-          <>
-            <div slot="fixed" className="duty-detail-heading ion-padding-vertical ion-padding-horizontal">
-              <IonText color="dark">
-                <b>Data do plantão: </b>
-                <span>
-                  {(duty && toPtBRDate(new Date(duty.date))) || ""}
-                </span>
-              </IonText>
-              <br/>
-              <IonText color="dark">
-                <b>Total de doces levados: </b> <span>{duty?.quantity}</span>
-              </IonText>
-            </div>
+            <>
+              <div slot="fixed" className="consolidated-month-detail-heading ion-padding-vertical ion-padding-horizontal">
+                <IonText color="dark">
+                  <b>Vendas do mês de {monthsTranslationMap[month]} de {year}</b>
+                </IonText>
+                <br />
+                <IonText color="dark">
+                  <b>Total de doces vendidos: </b> <span>{consolidatedMonth?.sales.length}</span>
+                </IonText>
+              </div>
 
-            <div style={{ marginTop: "70px" }}>
-              <SalesTable sales={duty?.sales || []} updateSales={updateSales} />
-            </div>
-          </>
-        )}
+              <div style={{ marginTop: "70px" }}>
+                <SalesTable sales={consolidatedMonth?.sales || []} updateSales={updateSales} />
+              </div>
+            </>
+          )}
       </IonContent>
 
       <IonFooter>
@@ -130,9 +152,9 @@ const Duty = () => {
           <IonToolbar className="footer-toolbar">
             <div className="results-table-container">
               <ResultsTable
-                subTotal={duty?.subtotal}
-                paidAmount={duty?.paidAmount}
-                scheduledAmount={duty?.scheduledAmount}
+                subTotal={consolidatedMonth?.subtotal}
+                paidAmount={consolidatedMonth?.paidAmount}
+                scheduledAmount={consolidatedMonth?.scheduledAmount}
               />
             </div>
           </IonToolbar>
@@ -142,4 +164,4 @@ const Duty = () => {
   );
 }
 
-export default Duty;
+export default ConsolidatedMonthPage;

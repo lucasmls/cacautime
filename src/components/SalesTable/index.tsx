@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonBadge } from '@ionic/react';
-import { Sale } from '../../interfaces/Duty'
+import { Sale } from '../../interfaces/Month'
 
 import './styles.css'
 
