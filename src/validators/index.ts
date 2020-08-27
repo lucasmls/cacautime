@@ -27,15 +27,6 @@ const registerCustomerValidation = Yup.object().shape({
     .max(11, 'O número de telefone deve conter no máximo 11 caracteres')
 })
 
-const registerDutyValidation = Yup.object().shape({
-  date: Yup.string()
-    .required('O campo de data é obrigatório'),
-
-  candyQuantity: Yup.number()
-    .required('O campo de quantidade é obrigatório')
-    .min(1, 'O valor mínimo de doces é 1')
-})
-
 const registerSaleValidation = Yup.object().shape({
   customerId: Yup.number()
     .required('O campo de usuário é obrigatório')
@@ -62,6 +53,5 @@ export {
   loginValidation,
   registerCandyValidation,
   registerCustomerValidation,
-  registerDutyValidation,
   registerSaleValidation,
 }
