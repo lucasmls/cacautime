@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
 import { IonContent, IonPage, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
-import { medkitOutline } from 'ionicons/icons';
+import { calendarOutline } from 'ionicons/icons';
 
 import './styles.css';
 import Header from '../../components/Header';
@@ -58,12 +58,12 @@ const Months: React.FC = () => {
                 <IonItem className="month-item" key={i} routerLink={`/month/${month.number}/${month.year}`} detail={true}>
                   <IonAvatar slot="start">
                     <div className="month-item-icon">
-                      <IonIcon icon={medkitOutline} size="large" />
+                      <IonIcon icon={calendarOutline} size="large" />
                     </div>
                   </IonAvatar>
                   <IonLabel>
                     <h3>
-                      Ver vendas do mês de <b>{monthsTranslationMap[month.month]}</b> de <b>{month.year}</b>
+                      Vendas do mês de <b>{monthsTranslationMap[month.month]}</b> de <b>{month.year}</b>
                     </h3>
                   </IonLabel>
                 </IonItem>
