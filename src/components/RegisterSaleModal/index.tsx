@@ -48,11 +48,12 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showFailureToast, setShowFailureToast] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     (async () => {
       if (!candies.length) {
+        setIsLoading(true)
         const { data } = await api.get<Candy[]>("/candy")
         setCandies([...data])
         setIsLoading(false)
@@ -63,6 +64,7 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
   useEffect(() => {
     (async () => {
       if (!customers.length) {
+        setIsLoading(true)
         const { data } = await api.get<Customer[]>('/customer')
         setCustomers([...data])
         setIsLoading(false)
