@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
 import { useFormik } from 'formik'
-import { IonModal, IonButton, IonItem, IonLabel, IonLoading, IonToast, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonModal, IonButton, IonItem, IonLabel, IonLoading, IonToast, IonSelect, IonSelectOption, IonDatetime } from '@ionic/react';
 import classnames from 'classnames'
 
 import Header from '../Header'
@@ -11,24 +11,24 @@ import Customer from '../../interfaces/Customer';
 import { candiesList } from '../../store/candies'
 import { customersList } from '../../store/customers';
 import { registerSaleValidation } from '../../validators';
+import { toEnUSDate } from '../../utils/date';
 
 import './styles.css';
 
 interface Props {
   isOpen: boolean
   handleClose(): void
-  dutyId: number
 }
 
 interface FormData {
-  dutyId: number | null;
   customerId: number | null;
   candyId: number | null;
   status: "paid" | "not_paid";
   paymentMethod: "money" | "transfer" | "scheduled";
+  date: string;
 }
 
-const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
+const RegisterSaleModal = ({ isOpen = false, handleClose }: Props) => {
   const [candies, setCandies] = useRecoilState(candiesList) as [Candy[], (c: Candy[]) => null]
   const [customers, setCustomers] = useRecoilState(customersList) as [Customer[], (c: Customer[]) => null]
 
@@ -40,7 +40,7 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
     resetForm,
     isSubmitting,
   } = useFormik({
-    initialValues: { dutyId: Number(dutyId), candyId: null, customerId: null, status: "paid", paymentMethod: "money" },
+    initialValues: { candyId: null, customerId: null, status: "paid", paymentMethod: "money", date: toEnUSDate(new Date()) },
     onSubmit: handleSubmit,
     validateOnChange: false,
     validationSchema: registerSaleValidation,
@@ -176,6 +176,18 @@ const RegisterSaleModal = ({ isOpen = false, handleClose, dutyId }: Props) => {
             </IonSelect>
           </IonItem>
           <span className={classnames({ 'validation-message': true, 'hide': !errors.paymentMethod })}>{errors.paymentMethod}</span>
+
+          <IonItem className="register-sale-item">
+            <IonLabel>Data da venda</IonLabel>
+            <IonDatetime
+              displayFormat="DD/MM/YYYY"
+              pickerFormat="DD/MM/YYYY"
+              placeholder="05/05/2020"
+              value={values.date}
+              onIonChange={e => setFieldValue("date", e.detail.value!.split("T")[0])}>
+            </IonDatetime>
+          </IonItem>
+          <span className={classnames({ 'validation-message': true, 'hide': !errors.date })}>{errors.date}</span>
         </div>
 
         <IonButton className="register-sale-btn" expand="block" color="primary" onClick={() => submit()}>

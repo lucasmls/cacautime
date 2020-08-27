@@ -122,8 +122,7 @@ const ConsolidatedMonthPage = () => {
         ]}
       />
 
-      {/* @TODO => Update this modal to work without Duty concept */}
-      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} dutyId={1} />
+      <RegisterSaleModal isOpen={showModal} handleClose={() => setShowModal(false)} />
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (

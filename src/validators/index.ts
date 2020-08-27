@@ -29,12 +29,11 @@ const registerCustomerValidation = Yup.object().shape({
 
 const registerSaleValidation = Yup.object().shape({
   customerId: Yup.number()
-    .required('O campo de usuário é obrigatório')
-    .nullable(),
-
-  dutyId: Yup.number()
-    .required('O campo de plantão é obrigatório')
-    .nullable(),
+  .required('O campo de usuário é obrigatório')
+  .nullable(),
+    
+  date: Yup.string()
+    .required('O campo de data é obrigatório'),
 
   candyId: Yup.number()
     .required('O campo de doce é obrigatório')
