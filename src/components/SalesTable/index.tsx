@@ -64,6 +64,7 @@ const SalesTable = ({ sales, updateSales }: Props) => {
           <th>Doce</th>
           <th>Status</th>
           <th>Meio de Pagamento</th>
+          <th>Data</th>
         </tr>
       </thead>
       <tbody>
@@ -76,11 +77,12 @@ const SalesTable = ({ sales, updateSales }: Props) => {
                 className="status-badge"
                 color={STATUS_TAG_COLOR[sale.status]}
                 onClick={() => handleStatusAndPaymentMethodChange("status", sale)}
-              >
+                >
                 {STATUS_TRANSLATION[sale.status]}
               </IonBadge>
             </td>
             <td onClick={() => handleStatusAndPaymentMethodChange("paymentMethod", sale)}>{PAYMENT_METHOD[sale.paymentMethod]}</td>
+            <td>{sale.date}</td>
           </tr>
         ))}
       </tbody>

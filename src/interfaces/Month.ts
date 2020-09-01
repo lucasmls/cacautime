@@ -21,4 +21,5 @@ export interface Sale {
   candyPrice: number;
   customerId: number;
   customerName: string;
+  date: string;
 }
