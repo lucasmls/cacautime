@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil'
 import { IonContent, IonPage, IonIcon, IonItem, IonAvatar, IonLabel, IonList } from '@ionic/react';
-import { calendarOutline } from 'ionicons/icons';
+import { calendarOutline, addOutline } from 'ionicons/icons';
 
 import './styles.css';
 import Header from '../../components/Header';
 import MonthsLoader from './MonthsLoader'
+import RegisterSaleModal from '../../components/RegisterSaleModal';
 import { api } from '../../services/api';
 import { Month } from '../../interfaces/Month';
 import { monthsList } from '../../store/months';
@@ -14,6 +15,7 @@ const Months: React.FC = () => {
   const [months, setMonths] = useRecoilState(monthsList) as [Month[], (c: Month[]) => null]
 
   const [isLoading, setIsLoading] = useState(true)
+  const [showRegisterSaleModal, setShowRegisterSaleModal] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -46,8 +48,18 @@ const Months: React.FC = () => {
     <IonPage>
       <Header
         title="Meses"
-        buttons={[]}
+        buttons={[
+          {
+            handlerFunc: () => setShowRegisterSaleModal(true),
+            slot: "primary",
+            text: (
+              <IonIcon color="dark" slot="icon-only" icon={addOutline} />
+            ),
+          }
+        ]}
       />
+
+      <RegisterSaleModal isOpen={showRegisterSaleModal} handleClose={() => setShowRegisterSaleModal(false)} />
 
       <IonContent className="ion-padding-horizontal ion-padding-vertical">
         {isLoading ? (
